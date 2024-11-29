@@ -1,0 +1,39 @@
+cache_task: 
+  description: >
+    Determinar a quantidade ideal de memória cache que o CPU deve possuir, considerando as informações fornecidas pelo cliente sobre consumo energético, 
+    desempenho desejado, custo máximo e o tipo de aplicação que será executada.  
+  expected_output: >
+    Quantidade de memória cache recomendada em KB, MB ou GB, com uma breve justificativa baseada nos requisitos do cliente.
+  agent: cache
+
+tipo_arquitetura_task: 
+  description: >
+    Avaliar as necessidades do cliente e decidir se a arquitetura do CPU deve ser RISC ou CISC, considerando as informações fornecidas sobre consumo energético, desempenho desejado, custo máximo e tipo de aplicação.  
+  expected_output: >
+    Arquitetura recomendada (RISC ou CISC) e uma justificativa detalhada com base nos requisitos e nas características do tipo de aplicação.
+  agent: tipo_arquitetura
+
+frequencia_task: 
+  description: >
+    Calcular a frequência ideal de operação do CPU para atender às expectativas de consumo energético, desempenho e custo máximo desejado, considerando o tipo de aplicação a ser utilizada pelo cliente.  
+  expected_output: >
+    Frequência recomendada (em GHz) com uma justificativa técnica que mostre como ela atende aos requisitos do cliente.
+  agent: frequencia
+
+escolhe_cpu_task: 
+  description: >
+    Com base na arquitetura, memória cache e frequência determinadas anteriormente, selecionar um modelo específico de CPU disponível no mercado que atenda às necessidades do 
+    cliente em termos de consumo energético, desempenho, custo e tipo de aplicação.  
+  expected_output: >
+    Nome completo do modelo do CPU, incluindo marca e geração, com uma justificativa sobre como ele atende às necessidades do cliente.
+  agent: escolhe_cpu
+  context: [frequencia_task,tipo_arquitetura_task,cache_task]
+
+justifica_escolha_task: 
+  description: >
+    Fornecer uma justificativa detalhada para a escolha do modelo de CPU, explicando como ele atende aos requisitos de consumo energético, desempenho, 
+    custo máximo e compatibilidade com o tipo de aplicação descrito pelo cliente.  
+  expected_output: >
+    Nome completo do modelo do CPU, incluindo marca e geração, com uma justificativa sobre como ele atende às necessidades do cliente.
+  agent: justifica_escolha
+  context: [escolhe_cpu_task,frequencia_task,tipo_arquitetura_task,cache_task]
